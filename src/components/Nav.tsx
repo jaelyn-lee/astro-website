@@ -7,7 +7,7 @@ const navMotion = {
     opacity: 1,
     transition: {
       when: 'beforeChildren',
-      staggerChildren: 0.3,
+      staggerChildren: 0.15,
     },
   },
   hidden: {
@@ -21,7 +21,7 @@ const itemMotion = {
   },
   hidden: {
     opacity: 0,
-    x: -180,
+    x: -100,
   },
 }
 
@@ -44,6 +44,7 @@ export default function Nav() {
           <a href="/contact">Contact</a>
         </div>
       )}
+      {/* hamburger bar */}
       {!matches && (
         <div
           onClick={() => setToggled((preToggle) => !preToggle)}
@@ -67,30 +68,31 @@ export default function Nav() {
           ></motion.span>
         </div>
       )}
+      {/* toggle nav */}
       {toggled && !matches && (
         <motion.div
-          animate={{ opacity: 1, x: 0 }}
-          initial={{ opacity: 0, x: 25 }}
-          className="flex items-center justify-center fixed bg-white bottom-0 left-0 w-full h-screen"
+          variants={navMotion}
+          animate="visible"
+          initial="hidden"
+          className="fixed left-0 top-0  z-40 flex h-screen
+            w-full flex-col items-center  justify-center  gap-24 bg-white text-2xl font-bold"
         >
-          <motion.div
-            variants={navMotion}
-            animate="visible"
-            initial="hidden"
-            className="flex flex-col gap-24 text-lg"
-          >
-            <motion.a variants={itemMotion} href="/">
-              Home
-            </motion.a>
-            <motion.a variants={itemMotion} href="/services">
-              Services
-            </motion.a>
-            <motion.a variants={itemMotion} href="/contact">
-              Contact
-            </motion.a>
-          </motion.div>
+          <motion.a variants={itemMotion} href="/">
+            Home
+          </motion.a>
+          <motion.a variants={itemMotion} href="/services">
+            Services
+          </motion.a>
+          <motion.a variants={itemMotion} href="/contact">
+            Contact
+          </motion.a>
         </motion.div>
       )}
+      <motion.div
+        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, x: 25 }}
+        className="hidden xl:flex xl:items-center  xl:justify-center xl:gap-12 xl:text-lg"
+      ></motion.div>
     </nav>
   )
 }
